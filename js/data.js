@@ -1,5 +1,4 @@
-'use strict'
-
+import {getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice} from './util.js';
 // create array with links to avatar photos
 
 const HOTEL_COUNT = 10;
@@ -171,3 +170,5 @@ function createLocation() {
 const hotels = new Array(AMOUNT_OF_HOTELS).fill(null).map(() => {
   return [createAuthorDescription(), createOffer(), createLocation()];
 });
+
+export {hotels};

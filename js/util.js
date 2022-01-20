@@ -1,4 +1,3 @@
-'use strict'
 // ----- UTILITIES -----
 
 // Function that returns random integer from given range
@@ -70,3 +69,6 @@ function randomSplice(arr) {
   result = arr.splice(randomIndex, 1)
   return String(result);
 }
+
+
+export {getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice};
