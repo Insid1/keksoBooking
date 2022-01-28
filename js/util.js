@@ -70,5 +70,30 @@ function randomSplice(arr) {
   return String(result);
 }
 
+// function that return card Element created from inner template
+// id of template is #card
+function createCardFromTemplate() {
+  const cardTemplate = document.querySelector('#card').content;
+  const clonedTemplate = cardTemplate.cloneNode(true);
+  const cardElement = clonedTemplate.querySelector('.popup');
 
-export {getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice};
+  return cardElement;
+}
+
+// function which create HTML element with given tag, class and textContent
+function createElement(tag = 'div', className, text) {
+  const theElement = document.createElement(tag);
+
+  if (className) {
+    theElement.classList.add(className);
+  }
+
+  if (text) {
+    theElement.textContent = text;
+  }
+
+  return theElement;
+}
+
+
+export {getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice, createCardFromTemplate, createElement};

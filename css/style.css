@@ -223,7 +223,7 @@ fieldset {
 .map__checkbox:focus + .map__feature {
    -webkit-box-shadow: 0 0 2px 2px #ff6547;
            box-shadow: 0 0 2px 2px #ff6547;
- }
+}
 
 .map__feature:active {
   -webkit-box-shadow: none;

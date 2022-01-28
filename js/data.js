@@ -63,9 +63,9 @@ const createAvatarLinks = function () {
   // create an array with avatarLinks
   for (let i = 1; i <= 10; i++) {
     if (i < 10) {
-      avatarLinks.push(avatarPath + '0' + i + imgFormat);
+      avatarLinks.push(avatarPath + '0' + i + '.' + imgFormat);
     } else {
-      avatarLinks.push(avatarPath + i + imgFormat);
+      avatarLinks.push(avatarPath + i + '.' + imgFormat);
     }
   }
   return avatarLinks;
@@ -125,7 +125,7 @@ function createOffer() {
 
   function getRandomPhotos() {
     let randomPhotos = []
-    randomPhotos.push(photoLinks[getRandomInt(0, photoLinks.length - 1)]);
+
 
     for (let i = 1; i < photoLinks.length; i++) {
       if (trueOrFalse()) {
