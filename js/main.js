@@ -1,4 +1,4 @@
-import './offer-generator.js'
+import './offer.js'
 // Константы-объекты с заглавной буквы
 // Массивы в CamelCase
 // Константы БОЛЬШИМИ БУКВАМИ

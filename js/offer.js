@@ -30,7 +30,7 @@ function assignDataToCard(cardElement, objData) {
   // returns a string as html Element to inser into code through innerHtml
   function decideFeatures(features) {
 
-    let featuresAsString= '';
+    let featuresAsString = '';
 
     for (let i = 0; i < features.length; i++) {
       const currentFeature = features[i];
@@ -44,7 +44,7 @@ function assignDataToCard(cardElement, objData) {
   function decidePhotos(photos) {
     // <img src="" class="popup__photo" width="45" height="40" alt="Фотография жилья">
     let photosAsString = '';
-    for (let i = 0; i < photos.length ; i++) {
+    for (let i = 0; i < photos.length; i++) {
       let currentPhotoLink = photos[i];
 
       photosAsString += `<img src="${currentPhotoLink}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`
@@ -75,34 +75,34 @@ function assignDataToCard(cardElement, objData) {
   const elementAvatar = cardElement.querySelector(
     '.popup__avatar');
 
-  // soruse objects from data
-  const authorObj = objData[0];
-  const descriptionObj = objData[1];
-  const locationObj = objData[2];
+  // source objects from data (destructurizing)
+  const [authorObj, descriptionObj] = objData;
 
   // assign data to variables
-  // {String}
-  const avatarLink = `${authorObj.author}`;
-  const title = descriptionObj.title;
-  const addres = descriptionObj.addres;
-  const price = descriptionObj.price;
-  const checkIn = descriptionObj.checkin;
-  const checkOut = descriptionObj.checkout;
-  const description = descriptionObj.description;
-  const guest = descriptionObj.guests;
-  const room = descriptionObj.rooms;
-  const type = descriptionObj.type;
-  // {Array}
-  const features = descriptionObj.features;
-  const photos = descriptionObj.photos;
+  const avatarLink = authorObj.author;
+  const {
+    // Strings:
+    title,
+    addres,
+    price,
+    checkin,
+    checkout,
+    description,
+    guests,
+    rooms,
+    type,
+    // Arrays:
+    features,
+    photos
+  } = descriptionObj;
 
   // assign data to DOM variables
   elementTitle.textContent = title;
   elementAdress.textContent = addres;
   elementPrice.textContent = `${price} ₽/ночь`;
   elementType.textContent = decideType(type);
-  elementCapacity.textContent = `${room} Комнат для ${guest} гостей`;
-  elementTime.textContent = `Заезд после ${checkIn}, выезд до ${checkOut}`;
+  elementCapacity.textContent = `${rooms} Комнат для ${guests} гостей`;
+  elementTime.textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
   elementFeatures.innerHTML = decideFeatures(features);
   elementDescription.textContent = description;
   elementPhotos.innerHTML = decidePhotos(photos);
