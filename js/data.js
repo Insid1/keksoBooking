@@ -10,8 +10,8 @@ const LocationCordRange = {
   MAX: 150,
 }
 const Price = {
-  MIN: 3000,
-  MAX: 15000,
+  MIN: 0,
+  MAX: 1000000,
 };
 const Rooms = {
   MIN: 1,
