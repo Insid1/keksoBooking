@@ -1,14 +1,13 @@
-import { hotels } from './data.js';
 import { createCardFromTemplate, createElement } from './util.js';
 
-// data for 1 offer;
-const mapArea = document.querySelector('#map-canvas');
-const currentCard = createCardFromTemplate();
-const hotel = hotels[0];
+// // data for 1 offer;
+// const currentCard = createCardFromTemplate();
 
-function renderOffer() {
+function createOfferElements(hotels) {
+  //
+  const offerElements = document.createDocumentFragment();
 
-  function assignDataToCard(offerElement, offerData) {
+  function createOfferFromData(offerElement, offerData) {
 
     // Functions
     function decideType(type) {
@@ -111,13 +110,23 @@ function renderOffer() {
     elementAvatar.src = avatarLink;
     decideFeatures();
 
-  }
+  };
 
-  assignDataToCard(currentCard, hotel);
-  mapArea.appendChild(currentCard);
+  hotels.forEach(currOffer => {
+    // create card element from tempalte
+    const currentCardElement = createCardFromTemplate();
+    // create offer from given data and put it into  cardElement
+    createOfferFromData(currentCardElement, currOffer);
+
+    offerElements.appendChild(currentCardElement);
+  })
+
+  // return collection of offer elements
+  return offerElements.children;
+
 }
 
-export {renderOffer};
+export { createOfferElements };
 
 
 

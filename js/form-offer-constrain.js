@@ -49,6 +49,6 @@ function addConstrains() {
   timeFieldElement.addEventListener('change', onTime())
 }
 
-export { addConstrains };
+export { addConstrains, adFormElement };
 
 
