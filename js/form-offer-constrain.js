@@ -1,3 +1,5 @@
+import { disableElement } from "./util.js";
+
 // price constrains
 const Prices = {
   bungalow: 0,
@@ -14,6 +16,8 @@ const apartamentPriceElement = adFormElement.querySelector('#price');
 const timeInElement = adFormElement.querySelector('#timein');
 const timeOutElement = adFormElement.querySelector('#timeout');
 const timeFieldElement = timeInElement.parentElement;
+const roomNumberElement = document.querySelector('#room_number');
+const guestNumberElements = document.querySelector('#capacity').children;
 
 function addConstrains() {
   // functions for events
@@ -27,7 +31,7 @@ function addConstrains() {
     }
 
     return assignMinimalPrice;
-  }
+  };
 
   function onTime() {
 
@@ -42,11 +46,36 @@ function addConstrains() {
     }
 
     return assignTimeLink;
-  }
+  };
+  // can be refactored through setCustonValidity
+  function onRooms() {
+    // function can be refactored quite hard to read conditional statements
+    const asignGuests = evt => {
+      const marker = +roomNumberElement.value;
+      // active not for guest if rooms = 100;
+      if (marker === 100) {
+        disableElement(guestNumberElements[0], false);
+      } else {
+        disableElement(guestNumberElements[0]);
+      }
+      // to work such loop elements must be in order;
+      for (let i = 1; i < guestNumberElements.length; i++) {
+        const currentElement = guestNumberElements[i];
+        if (marker >= i && marker !== 100) {
+          disableElement(currentElement, false);
+        } else {
+          disableElement(currentElement);
+        }
+      }
+    }
+
+    return asignGuests;
+  };
 
   // assign events
   apartamentTypeElement.addEventListener('change', onPrice());
-  timeFieldElement.addEventListener('change', onTime())
+  timeFieldElement.addEventListener('change', onTime());
+  roomNumberElement.addEventListener('change', onRooms());
 }
 
 export { addConstrains, adFormElement };

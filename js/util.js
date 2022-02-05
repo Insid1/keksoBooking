@@ -95,5 +95,9 @@ function createElement(tag = 'div', className, text) {
   return theElement;
 }
 
+function disableElement(element, bool = true) {
+  element.disabled = bool;
+}
 
-export {getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice, createCardFromTemplate, createElement};
+
+export {getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice, createCardFromTemplate, createElement, disableElement};
