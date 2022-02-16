@@ -28,7 +28,11 @@ function createOfferElements(hotels) {
     // returns a string as html Element to inser into code through innerHtml
     function decideFeatures() {
       let featuresElement = document.createDocumentFragment();
+      elementFeatures.innerHTML = '';
+
+      if (!features) return;
       // create html elements
+
       for (let i = 0; i < features.length; i++) {
         const currentFeature = features[i];
         const currentElement = createElement('li', 'popup__feature');
@@ -37,15 +41,17 @@ function createOfferElements(hotels) {
         featuresElement.appendChild(currentElement);
       }
       // remove already existing elements from parent Element
-      elementFeatures.innerHTML = '';
+
       // add new elements
       elementFeatures.appendChild(featuresElement);
 
     }
 
     function decidePhotos(photos) {
-      // <img src="" class="popup__photo" width="45" height="40" alt="Фотография жилья">
       let photosAsString = '';
+
+      if (!photos) return;
+
       for (let i = 0; i < photos.length; i++) {
         let currentPhotoLink = photos[i];
 
@@ -78,10 +84,13 @@ function createOfferElements(hotels) {
       '.popup__avatar');
 
     // source objects from data (destructurizing)
-    const [authorObj, descriptionObj] = offerData;
+    // console.log('offerData:', offerData);
+    const { author, offer } = offerData;
+    // console.log('offer:', offer);
+
 
     // assign data to variables
-    const avatarLink = authorObj.author;
+    const avatarLink = author.avatar;
     const {
       // Strings:
       title,
@@ -96,7 +105,7 @@ function createOfferElements(hotels) {
       // Arrays:
       features,
       photos
-    } = descriptionObj;
+    } = offer;
 
     // assign data to DOM variables
     elementTitle.textContent = title;

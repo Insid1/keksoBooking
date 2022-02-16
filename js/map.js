@@ -1,35 +1,37 @@
 const adressElement = document.querySelector('#address');
-import { hotels } from './data.js';
+// import { hotels } from './data.js';
 import { createOfferElements } from './offer.js';
 import { disablePage } from './disable-mode.js';
 
-// constants
-const CityCoords = {
-  tokyo: [35.68974, 139.75393],
-};
-const ZOOM = 14;
-const offerElements = createOfferElements(hotels);
-const generalIconSize = 40 // px
-const mainIconSize = 52 // px
+function generateMap(hotels) {
 
-// Map
-const map = L.map('map-canvas')
-  .on('load', () => {
-    console.log('Карта инициализирована!')
-  })
-  .setView({
-    lat: CityCoords.tokyo[0],
-    lng: CityCoords.tokyo[1],
-  }, ZOOM);
+  // constants
+  const CityCoords = {
+    tokyo: [35.68974, 139.75393],
+  };
+  const ZOOM = 14;
+  const offerElements = createOfferElements(hotels);
+  const generalIconSize = 40 // px
+  const mainIconSize = 52 // px
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+  // Map
+  const map = L.map('map-canvas')
+    .on('load', () => {
+      console.log('Карта инициализирована!')
+    })
+    .setView({
+      lat: CityCoords.tokyo[0],
+      lng: CityCoords.tokyo[1],
+    }, ZOOM);
 
-function generateMap() {
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+
+
   // Functions
   function getMarkerCoordinates(marker) {
     const lat = marker._latlng.lat.toFixed(5);
@@ -62,12 +64,11 @@ function generateMap() {
   }
 
   function addSimpleMarkers() {
-
     hotels.forEach((currentOffer, index) => {
       const currentOfferElement = offerElements[index];
 
       // create coord arr of current data element
-      const coord = [currentOffer[2].x, currentOffer[2].y];
+      const coord = [currentOffer['location'].lat, currentOffer['location'].lng];
       const marker = generateMarker(coord);
       marker.bindPopup(currentOfferElement);
     })
@@ -78,12 +79,12 @@ function generateMap() {
   const generalIcon = L.icon({
     iconUrl: './img/pin.svg',
     iconSize: [generalIconSize, generalIconSize],
-    iconAnchor: [generalIconSize/2, generalIconSize],
+    iconAnchor: [generalIconSize / 2, generalIconSize],
   });
   const mainIcon = L.icon({
     iconUrl: './img/main-pin.svg',
     iconSize: [mainIconSize, mainIconSize],
-    iconAnchor: [mainIconSize/2, mainIconSize],
+    iconAnchor: [mainIconSize / 2, mainIconSize],
   });
 
   // Markers
