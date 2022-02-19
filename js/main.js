@@ -1,11 +1,16 @@
-import { addConstrains } from './form-offer-constrain.js';
+import { addConstrains as addConstrainsToForm } from './form-offer-constrain.js';
 import { disablePage } from './disable-mode.js';
-import { getData } from './api.js';
-addConstrains();
+import { getData , onSubmitForm } from './api.js';
+addConstrainsToForm();
 disablePage();
 getData();
 
 // test
+
+onSubmitForm();
+
+
+
 
 
 

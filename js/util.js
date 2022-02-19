@@ -99,7 +99,13 @@ function disableElement(element, bool = true) {
   element.disabled = bool;
 }
 
-function giveMessageServerError(err) {
+function removeElementInTime(element, time = 1000) {
+  setTimeout(() => {
+    element.remove()
+  }, time);
+}
+
+function showErrorGet(err) {
   const messageErrorElement = document.querySelector('.server-error');
   const errorShowTime = 4000;
   const errorTextElement = createElement('p', '', err);
@@ -116,4 +122,4 @@ function giveMessageServerError(err) {
 }
 
 
-export {getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice, createCardFromTemplate, createElement, disableElement, giveMessageServerError};
+export {getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice, createCardFromTemplate, createElement, disableElement, showErrorGet, removeElementInTime};
