@@ -1,30 +1,10 @@
 import { generateMap } from './map.js';
-import { showErrorGet, removeElementInTime } from './util.js';
+import { showErrorGet, showErrorPOST, showSuccessServerMessage } from './util.js';
 import { adFormElement } from './form-offer-constrain.js';
+
 
 const SHOW_TIME = 3000;
 const AMOUNT_OF_OFFERS = 50;
-// Доработать reset формы по ТЗ
-
-function showErrorPOST() {
-  const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  const errorElement = errorTemplate.cloneNode(true);
-
-  document.body.appendChild(errorElement);
-
-  removeElementInTime(errorElement, SHOW_TIME);
-
-}
-
-function showSuccessServerMessage() {
-  const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-  const succesElement = successMessageTemplate.cloneNode(true);
-
-  document.body.appendChild(succesElement);
-
-  removeElementInTime(succesElement, SHOW_TIME);
-
-}
 
 function getData() {
   fetch(
@@ -51,13 +31,13 @@ function sendData(formData) {
     body: formData,
   }).then(response => {
     if (response.ok) {
-      showSuccessServerMessage();
+      showSuccessServerMessage(SHOW_TIME);
       adFormElement.reset();
     } else {
-      showErrorPOST();
+      showErrorPOST(SHOW_TIME);
     }
   }).catch(err => {
-    showErrorPOST();
+    showErrorPOST(SHOW_TIME);
   })
 }
 

@@ -105,9 +105,8 @@ function removeElementInTime(element, time = 1000) {
   }, time);
 }
 
-function showErrorGet(err) {
+function showErrorGet(err, SHOW_TIME) {
   const messageErrorElement = document.querySelector('.server-error');
-  const errorShowTime = 4000;
   const errorTextElement = createElement('p', '', err);
 
   messageErrorElement.appendChild(errorTextElement);
@@ -118,8 +117,33 @@ function showErrorGet(err) {
     messageErrorElement.classList.add('hidden');
     messageErrorElement.lastChild.remove();
 
-  }, errorShowTime);
+  }, SHOW_TIME);
+}
+
+function showErrorPOST(SHOW_TIME) {
+  const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  const errorElement = errorTemplate.cloneNode(true);
+  const errorButton = errorElement.querySelector('.error__button')
+
+  document.body.appendChild(errorElement);
+
+  errorElement.addEventListener('click', (evt) => {
+    errorElement.remove();
+  })
+
+  removeElementInTime(errorElement, SHOW_TIME);
+
+}
+
+function showSuccessServerMessage(SHOW_TIME) {
+  const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+  const succesElement = successMessageTemplate.cloneNode(true);
+
+  document.body.appendChild(succesElement);
+
+  removeElementInTime(succesElement, SHOW_TIME);
+
 }
 
 
-export {getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice, createCardFromTemplate, createElement, disableElement, showErrorGet, removeElementInTime};
+export { getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice, createCardFromTemplate, createElement, disableElement, showErrorGet, showErrorPOST, showSuccessServerMessage };
