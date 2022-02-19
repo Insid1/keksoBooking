@@ -99,5 +99,21 @@ function disableElement(element, bool = true) {
   element.disabled = bool;
 }
 
+function giveMessageServerError(err) {
+  const messageErrorElement = document.querySelector('.server-error');
+  const errorShowTime = 4000;
+  const errorTextElement = createElement('p', '', err);
 
-export {getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice, createCardFromTemplate, createElement, disableElement};
+  messageErrorElement.appendChild(errorTextElement);
+  messageErrorElement.classList.remove('hidden');
+
+
+  setTimeout(() => {
+    messageErrorElement.classList.add('hidden');
+    messageErrorElement.lastChild.remove();
+
+  }, errorShowTime);
+}
+
+
+export {getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice, createCardFromTemplate, createElement, disableElement, giveMessageServerError};

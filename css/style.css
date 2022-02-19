@@ -1004,6 +1004,22 @@ fieldset {
   outline: none;
   opacity: 0.6;
 }
+/* Серверная ошибка */
+.server-error {
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: block;
+  position: fixed;
+  background-color: rgb(190, 0, 0);
+  text-align: center;
+  z-index: 1000;
+
+}
+
+.server-error p {
+  color: white;
+}
 
 .visually-hidden {
   position: absolute;

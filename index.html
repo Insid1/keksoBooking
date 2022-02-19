@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href = "leaflet/leaflet.css">
+  <link rel="stylesheet" href="leaflet/leaflet.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кексобукинг</title>
 </head>
@@ -95,8 +95,9 @@
           </div>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
-          <label class="ad-form__label" for="title" >Заголовок объявления</label>
-          <input id="title" name="title" type="text" minlength="30" maxlength="100" required placeholder="Милая, уютная квартирка в центре Токио">
+          <label class="ad-form__label" for="title">Заголовок объявления</label>
+          <input id="title" name="title" type="text" minlength="30" maxlength="100" required
+            placeholder="Милая, уютная квартирка в центре Токио">
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
@@ -131,10 +132,10 @@
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="room_number">Количество комнат</label>
           <select id="room_number" name="rooms" required>
-            <option value="100" >100 комнат</option>
+            <option value="100">100 комнат</option>
             <option value="1" selected>1 комната</option>
-            <option value="2" >2 комнаты</option>
-            <option value="3" >3 комнаты</option>
+            <option value="2">2 комнаты</option>
+            <option value="3">3 комнаты</option>
           </select>
         </fieldset>
         <fieldset class="ad-form__element">
@@ -208,6 +209,10 @@
     </ul>
   </footer>
 
+  <!-- Баннер ошибки для сервера -->
+  <div class="server-error hidden">
+    <p>Ошибка! Код ошибки:</p>
+  </div>
   <!-- Карточка объявления -->
   <template id="card">
     <article class="popup">
