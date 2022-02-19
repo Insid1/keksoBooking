@@ -3,65 +3,81 @@ const adressElement = document.querySelector('#address');
 import { createOfferElements } from './offer.js';
 import { disablePage } from './disable-mode.js';
 
+// constants
+const CityCoords = {
+  tokyo: [35.68974, 139.75393],
+};
+const ZOOM = 14;
+const GENERAL_ICON_SIZE = 40 // px
+const MAIN_ICON_SIZE = 52 // px
+
+// Map
+const map = L.map('map-canvas')
+  .on('load', () => {
+    console.log('Карта инициализирована!')
+  })
+  .setView({
+    lat: CityCoords.tokyo[0],
+    lng: CityCoords.tokyo[1],
+  }, ZOOM);
+
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
+).addTo(map);
+
+
+// sub Functions
+function getMarkerCoordinates(marker) {
+  const lat = marker._latlng.lat.toFixed(5);
+  const lng = marker._latlng.lng.toFixed(5);
+
+  return [lat, lng];
+};
+
+function generateMarker(coords, icon = generalIcon, drag = false) {
+  const marker = L.marker(
+    coords, {
+    icon: icon,
+    draggable: drag,
+  })
+
+  // add marker to map
+  marker.addTo(map);
+  return marker;
+}
+
+function fillAdress(element = adressElement) {
+
+  function asignAdress(coordinates) {
+    element.value = coordinates.join(' ');
+  }
+
+  const coordinates = getMarkerCoordinates(mainMarker);
+  // fill the adress field with coordinates
+  asignAdress(coordinates);
+}
+
+// Icons
+const generalIcon = L.icon({
+  iconUrl: './img/pin.svg',
+  iconSize: [GENERAL_ICON_SIZE, GENERAL_ICON_SIZE],
+  iconAnchor: [GENERAL_ICON_SIZE / 2, GENERAL_ICON_SIZE],
+});
+const mainIcon = L.icon({
+  iconUrl: './img/main-pin.svg',
+  iconSize: [MAIN_ICON_SIZE, MAIN_ICON_SIZE],
+  iconAnchor: [MAIN_ICON_SIZE / 2, MAIN_ICON_SIZE],
+});
+
+// Markers
+const mainMarker = generateMarker(CityCoords.tokyo, mainIcon, true);
+
+// main function
 function generateMap(hotels) {
-
-  // constants
-  const CityCoords = {
-    tokyo: [35.68974, 139.75393],
-  };
-  const ZOOM = 14;
   const offerElements = createOfferElements(hotels);
-  const generalIconSize = 40 // px
-  const mainIconSize = 52 // px
-
-  // Map
-  const map = L.map('map-canvas')
-    .on('load', () => {
-      console.log('Карта инициализирована!')
-    })
-    .setView({
-      lat: CityCoords.tokyo[0],
-      lng: CityCoords.tokyo[1],
-    }, ZOOM);
-
-  L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    },
-  ).addTo(map);
-
-
-  // Functions
-  function getMarkerCoordinates(marker) {
-    const lat = marker._latlng.lat.toFixed(5);
-    const lng = marker._latlng.lng.toFixed(5);
-
-    return [lat, lng];
-  };
-
-  function fillAdress(element = adressElement) {
-
-    function asignAdress(coordinates) {
-      element.value = coordinates.join(' ');
-    }
-
-    const coordinates = getMarkerCoordinates(mainMarker);
-    // fill the adress field with coordinates
-    asignAdress(coordinates);
-  }
-
-  function generateMarker(coords, icon = generalIcon, drag = false) {
-    const marker = L.marker(
-      coords, {
-      icon: icon,
-      draggable: drag,
-    })
-
-    // add marker to map
-    marker.addTo(map);
-    return marker;
-  }
 
   function addSimpleMarkers() {
     hotels.forEach((currentOffer, index) => {
@@ -74,21 +90,6 @@ function generateMap(hotels) {
     })
 
   }
-
-  // Icons
-  const generalIcon = L.icon({
-    iconUrl: './img/pin.svg',
-    iconSize: [generalIconSize, generalIconSize],
-    iconAnchor: [generalIconSize / 2, generalIconSize],
-  });
-  const mainIcon = L.icon({
-    iconUrl: './img/main-pin.svg',
-    iconSize: [mainIconSize, mainIconSize],
-    iconAnchor: [mainIconSize / 2, mainIconSize],
-  });
-
-  // Markers
-  const mainMarker = generateMarker(CityCoords.tokyo, mainIcon, true);
 
   // fill adress area with coords of main marker
   fillAdress();
@@ -103,7 +104,7 @@ function generateMap(hotels) {
   disablePage(false);
 }
 
-export { generateMap }
+export { generateMap, fillAdress }
 
 
 

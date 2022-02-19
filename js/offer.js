@@ -1,7 +1,5 @@
 import { createCardFromTemplate, createElement } from './util.js';
 
-// // data for 1 offer;
-// const currentCard = createCardFromTemplate();
 
 function createOfferElements(hotels) {
   //
@@ -21,7 +19,7 @@ function createOfferElements(hotels) {
         case 'palace':
           return 'Дворец';
         default:
-          return 'unknown type';
+          return 'ЖИЛИЩЕ';
       }
     }
 
@@ -135,8 +133,5 @@ function createOfferElements(hotels) {
 
 }
 
+
 export { createOfferElements };
-
-
-
-

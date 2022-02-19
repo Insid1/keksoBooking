@@ -1,4 +1,5 @@
 import { disableElement } from "./util.js";
+import { fillAdress } from "./map.js";
 
 // price constrains
 const Prices = {
@@ -8,6 +9,7 @@ const Prices = {
   house: 5000,
   palace: 10000,
 }
+const DELAY_FOR_RESET = 50;
 
 // HTML elements
 const adFormElement = document.querySelector('.ad-form');
@@ -76,6 +78,16 @@ function addConstrains() {
   apartamentTypeElement.addEventListener('change', onPrice());
   timeFieldElement.addEventListener('change', onTime());
   roomNumberElement.addEventListener('change', onRooms());
+
+  adFormElement.addEventListener('reset', (evt) => {
+    setTimeout(() => {
+      // ^_^ sry :(
+      onPrice()();
+      onRooms()();
+      fillAdress();
+    }, DELAY_FOR_RESET);
+  })
+
 }
 
 export { addConstrains, adFormElement };

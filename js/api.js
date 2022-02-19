@@ -1,14 +1,16 @@
 import { generateMap } from './map.js';
 import { showErrorGet, removeElementInTime } from './util.js';
 import { adFormElement } from './form-offer-constrain.js';
-const page = document.querySelector('body');
+
 const SHOW_TIME = 3000;
+const AMOUNT_OF_OFFERS = 50;
+// Доработать reset формы по ТЗ
 
 function showErrorPOST() {
   const errorTemplate = document.querySelector('#error').content.querySelector('.error');
   const errorElement = errorTemplate.cloneNode(true);
 
-  page.appendChild(errorElement);
+  document.body.appendChild(errorElement);
 
   removeElementInTime(errorElement, SHOW_TIME);
 
@@ -18,7 +20,7 @@ function showSuccessServerMessage() {
   const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
   const succesElement = successMessageTemplate.cloneNode(true);
 
-  page.appendChild(succesElement);
+  document.body.appendChild(succesElement);
 
   removeElementInTime(succesElement, SHOW_TIME);
 
@@ -31,7 +33,7 @@ function getData() {
       return response.json();
     })
     .then((json) => {
-      return (json.slice(0, 10));
+      return (json.slice(0, AMOUNT_OF_OFFERS));
     })
     .then(preparedData => {
       generateMap(preparedData);
@@ -41,16 +43,16 @@ function getData() {
     });
 }
 
-
 function sendData(formData) {
 
 
-  fetch('https://23.javascript.pages.academy/keksobooking', {
+  fetch('https://23.javascript.pages.academy/keksobookin', {
     method: 'POST',
     body: formData,
   }).then(response => {
     if (response.ok) {
       showSuccessServerMessage();
+      adFormElement.reset();
     } else {
       showErrorPOST();
     }
@@ -58,8 +60,6 @@ function sendData(formData) {
     showErrorPOST();
   })
 }
-
-
 
 function onSubmitForm(onSuccess) {
 
@@ -72,4 +72,3 @@ function onSubmitForm(onSuccess) {
 
 
 export { getData, onSubmitForm, sendData };
-

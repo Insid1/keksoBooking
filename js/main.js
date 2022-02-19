@@ -4,10 +4,11 @@ import { getData , onSubmitForm } from './api.js';
 addConstrainsToForm();
 disablePage();
 getData();
+onSubmitForm();
 
 // test
 
-onSubmitForm();
+
 
 
 
