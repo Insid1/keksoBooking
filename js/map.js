@@ -1,64 +1,14 @@
 const adressElement = document.querySelector('#address');
-// import { hotels } from './data.js';
 import { createOfferElements } from './offer.js';
-import { disablePage } from './disable-mode.js';
 
 // constants
 const CityCoords = {
-  tokyo: [35.68974, 139.75393],
+  TOKYO: [35.68974, 139.75393],
 };
 const ZOOM = 14;
 const GENERAL_ICON_SIZE = 40 // px
 const MAIN_ICON_SIZE = 52 // px
-
-// Map
-const map = L.map('map-canvas')
-  .on('load', () => {
-    console.log('Карта инициализирована!')
-  })
-  .setView({
-    lat: CityCoords.tokyo[0],
-    lng: CityCoords.tokyo[1],
-  }, ZOOM);
-
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
-
-
-// sub Functions
-function getMarkerCoordinates(marker) {
-  const lat = marker._latlng.lat.toFixed(5);
-  const lng = marker._latlng.lng.toFixed(5);
-
-  return [lat, lng];
-};
-
-function generateMarker(coords, icon = generalIcon, drag = false) {
-  const marker = L.marker(
-    coords, {
-    icon: icon,
-    draggable: drag,
-  })
-
-  // add marker to map
-  marker.addTo(map);
-  return marker;
-}
-
-function fillAdress(element = adressElement) {
-
-  function asignAdress(coordinates) {
-    element.value = coordinates.join(' ');
-  }
-
-  const coordinates = getMarkerCoordinates(mainMarker);
-  // fill the adress field with coordinates
-  asignAdress(coordinates);
-}
+let previousMarkers = L.layerGroup();
 
 // Icons
 const generalIcon = L.icon({
@@ -72,40 +22,88 @@ const mainIcon = L.icon({
   iconAnchor: [MAIN_ICON_SIZE / 2, MAIN_ICON_SIZE],
 });
 
-// Markers
-const mainMarker = generateMarker(CityCoords.tokyo, mainIcon, true);
+function createMap() {
+  const map = L.map('map-canvas')
+    .on('load', () => {
+      console.log('Карта инициализирована!')
+    })
+    .setView({
+      lat: CityCoords.TOKYO[0],
+      lng: CityCoords.TOKYO[1],
+    }, ZOOM);
+
+  // Load map layer to initialized map
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  )
+    .addTo(map);
+
+  return map
+}
+
+function getMarkerCoordinates(marker) {
+  const lat = marker._latlng.lat.toFixed(5);
+  const lng = marker._latlng.lng.toFixed(5);
+
+  return [lat, lng];
+};
+
+function createMarker(coords, icon = generalIcon, drag = false) {
+  const marker = L.marker(
+    coords, {
+    icon: icon,
+    draggable: drag,
+  })
+
+  return marker;
+}
+
+function generateGeneralMarkers(hotels) {
+  const offerElements = createOfferElements(hotels);
+  const markers = [];
+
+  hotels.forEach((currentOffer, index) => {
+    const currentOfferElement = offerElements[index];
+
+    // create coord arr of current data element
+    const coord = [currentOffer['location'].lat, currentOffer['location'].lng];
+    const marker = createMarker(coord);
+    marker.bindPopup(currentOfferElement);
+    markers.push(marker);
+  })
+  return markers;
+
+}
+
+function fillAdress(element = adressElement) {
+  function asignAdress(coordinates) {
+    element.value = coordinates.join(' ');
+  }
+
+  const coordinates = getMarkerCoordinates(mainMarker);
+  // fill the adress field with coordinates
+  asignAdress(coordinates);
+}
+
+const map = createMap();
+const mainMarker = createMarker(CityCoords.TOKYO, mainIcon, true);
+mainMarker.addTo(map);
+mainMarker.on('moveend', () => {
+  fillAdress();
+})
 
 // main function
 function generateMap(hotels) {
-  const offerElements = createOfferElements(hotels);
-
-  function addSimpleMarkers() {
-    hotels.forEach((currentOffer, index) => {
-      const currentOfferElement = offerElements[index];
-
-      // create coord arr of current data element
-      const coord = [currentOffer['location'].lat, currentOffer['location'].lng];
-      const marker = generateMarker(coord);
-      marker.bindPopup(currentOfferElement);
-    })
-
-  }
-
+  previousMarkers.removeFrom(map);
+  const generalMarkers = L.layerGroup(generateGeneralMarkers(hotels));
+  generalMarkers.addTo(map);
+  // store markers to delete them after function call
+  previousMarkers = generalMarkers;
   // fill adress area with coords of main marker
   fillAdress();
-
-  // Events
-  mainMarker.on('moveend', (evt) => {
-    fillAdress();
-  })
-  // add simple marks
-  addSimpleMarkers();
-  // turn off disable mode
-  disablePage(false);
 }
 
 export { generateMap, fillAdress }
-
-
-
-

@@ -1,22 +1,23 @@
 import { generateMap } from './map.js';
 import { showErrorGet, showErrorPOST, showSuccessServerMessage } from './util.js';
 import { adFormElement } from './form-offer-constrain.js';
+import { disablePage } from './disable-mode.js'
 
 
 const SHOW_TIME = 3000;
-const AMOUNT_OF_OFFERS = 50;
+const AMOUNT_OF_OFFERS = 10;
 
 function getData() {
-  fetch(
+  return fetch(
     'https://23.javascript.pages.academy/keksobooking/data')
     .then((response) => {
       return response.json();
     })
     .then((json) => {
-      return (json.slice(0, AMOUNT_OF_OFFERS));
-    })
-    .then(preparedData => {
-      generateMap(preparedData);
+      const temporaryData = json.slice(0, AMOUNT_OF_OFFERS);
+      disablePage(false);
+      generateMap(temporaryData);
+      return json;
     })
     .catch(err => {
       showErrorGet(err);
@@ -26,7 +27,7 @@ function getData() {
 function sendData(formData) {
 
 
-  fetch('https://23.javascript.pages.academy/keksobookin', {
+  fetch('https://23.javascript.pages.academy/keksobooking', {
     method: 'POST',
     body: formData,
   }).then(response => {

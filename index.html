@@ -36,8 +36,8 @@
           </select>
           <select name="housing-price" id="housing-price" class="map__filter">
             <option value="any" selected>Любая</option>
-            <option value="middle">10000 - 50000&#x20bd;</option>
             <option value="low">до 10000&#x20bd;</option>
+            <option value="middle">10000 - 50000&#x20bd;</option>
             <option value="high">от 50000&#x20bd;</option>
           </select>
           <select name="housing-rooms" id="housing-rooms" class="map__filter">
@@ -86,7 +86,8 @@
               <img src="img/muffin-grey.svg" alt="Аватар пользователя" width="40" height="44">
             </div>
             <div class="ad-form__field">
-              <input type="file" id="avatar" name="avatar" accept=".jpeg, .png, .svg" class="ad-form-header__input visually-hidden">
+              <input type="file" id="avatar" name="avatar" accept=".jpeg, .png, .svg"
+                class="ad-form-header__input visually-hidden">
               <label class="ad-form-header__drop-zone" for="avatar">Загрузить<br>фото...</label>
             </div>
             <p class="ad-form-header__info">Заполните все обязательные поля, назначьте цену, загрузите аватар и фото
@@ -253,6 +254,7 @@
       <button type="button" form="ad-form" class="error__button">Попробовать снова</button>
     </div>
   </template>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
   <script src="leaflet/leaflet.js"></script>
   <script type="module" src="./js/main.js"></script>
 </body>
