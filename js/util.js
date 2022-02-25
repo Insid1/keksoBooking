@@ -145,5 +145,18 @@ function showSuccessServerMessage(SHOW_TIME) {
 
 }
 
+function myDebounce(cb, timeout) {
+  let handler;
+
+  return () => {
+    clearTimeout(handler);
+    handler = setTimeout(() => {
+      cb();
+    }, timeout)
+  }
+
+
+}
+
 
 export { getRandomInt, getRandomFloat, trueOrFalse, isMaximumLength, capitalizeFirstLetter, randomSplice, createCardFromTemplate, createElement, disableElement, showErrorGet, showErrorPOST, showSuccessServerMessage };
