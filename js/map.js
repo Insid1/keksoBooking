@@ -8,6 +8,7 @@ const CityCoords = {
 const ZOOM = 14;
 const GENERAL_ICON_SIZE = 40 // px
 const MAIN_ICON_SIZE = 52 // px
+const MAX_HOTEL_NUM = 10;
 let previousMarkers = L.layerGroup();
 
 // Icons
@@ -98,7 +99,8 @@ mainMarker.on('moveend', () => {
 // main function
 function generateMap(hotels) {
   previousMarkers.removeFrom(map);
-  const generalMarkers = L.layerGroup(generateGeneralMarkers(hotels));
+  const maximumHotels = hotels.slice(0, MAX_HOTEL_NUM);
+  const generalMarkers = L.layerGroup(generateGeneralMarkers(maximumHotels));
   generalMarkers.addTo(map);
   // store markers to delete them after function call
   previousMarkers = generalMarkers;

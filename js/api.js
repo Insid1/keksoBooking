@@ -3,7 +3,6 @@ import { showErrorGet, showErrorPOST, showSuccessServerMessage } from './util.js
 import { adFormElement } from './form-offer-constrain.js';
 import { disablePage } from './disable-mode.js'
 
-
 const SHOW_TIME = 3000;
 const AMOUNT_OF_OFFERS = 10;
 
