@@ -3,6 +3,7 @@ import { disablePage } from './disable-mode.js';
 import { getData, onSubmitForm } from './api.js';
 import { applyFilter } from './filter.js';
 
+
 addConstrainsToForm();
 disablePage();
 onSubmitForm();

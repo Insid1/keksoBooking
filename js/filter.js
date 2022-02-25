@@ -1,6 +1,7 @@
 // import { getData } from "./api.js";
 import { generateMap } from "./map.js";
 
+const RENENDER_DELAY = 500;
 const PriceValue = {
   LOW: 10000,
   HIGH: 50000,
@@ -14,100 +15,109 @@ const housingRoomsElement = mapFilterElement.querySelector('#housing-rooms');
 const housingGuestsElement = mapFilterElement.querySelector('#housing-guests');
 const housingFeaturesElement = mapFilterElement.querySelector('#housing-features');
 
-function filterHotels(hotels) {
-  const getNumOfActiveFilters = function () {
-    let counter = 0;
-    for (let currFilter of mapFilterElements) {
-      if (currFilter.value !== 'any') {
-        counter += 1;
+
+
+function applyFilter(hotels) {
+
+  function filterHotels() {
+    const getNumOfActiveFilters = function () {
+      let counter = 0;
+      for (let currFilter of mapFilterElements) {
+        if (currFilter.value !== 'any') {
+          counter += 1;
+        }
+      }
+      for (let currFeatureFilter of mapFilterFeatureElements) {
+        if (currFeatureFilter.checked) {
+          counter += 1;
+        }
+      }
+      return counter;
+    }
+
+    const checkType = function (hotel) {
+      if (hotel.offer.type === housingTypeElement.value) {
+        hotel.filterRate += 1;
+      };
+    }
+    const checkRooms = function (hotel) {
+      if (hotel.offer.rooms === +housingRoomsElement.value) {
+        hotel.filterRate += 1;
+      };
+    }
+
+    const checkGuests = function (hotel) {
+      if (hotel.offer.guests === +housingGuestsElement.value) {
+        hotel.filterRate += 1;
+      };
+    }
+
+    const checkFeatures = function (hotel) {
+      if (!hotel.offer.features) {
+        return;
+      };
+
+      for (let featureElement of mapFilterFeatureElements) {
+        if (featureElement.checked && hotel
+          .offer
+          .features
+          .includes(featureElement.value)) {
+          hotel.filterRate += 1;
+        }
       }
     }
-    for (let currFeatureFilter of mapFilterFeatureElements) {
-      if (currFeatureFilter.checked) {
-        counter += 1;
-      }
-    }
-    return counter;
-  }
 
-  const checkType = function (hotel) {
-    if (hotel.offer.type === housingTypeElement.value) {
-      hotel.filterRate += 1;
-    };
-  }
-  const checkRooms = function (hotel) {
-    if (hotel.offer.rooms === +housingRoomsElement.value) {
-      hotel.filterRate += 1;
-    };
-  }
+    const checkPrice = function (hotel) {
+      const hotelPrice = hotel.offer.price;
+      const priceFilter = housingPriceElement.value;
 
-  const checkGuests = function (hotel) {
-    if (hotel.offer.guests === +housingGuestsElement.value) {
-      hotel.filterRate += 1;
-    };
-  }
+      const isLowMidHigh = function () {
+        if (hotelPrice < PriceValue.LOW) {
+          return 'low';
+        } if (hotelPrice > PriceValue.HIGH) {
+          return 'high';
+        } else {
+          return 'middle';
+        }
+      };
 
-  const checkFeatures = function (hotel) {
-    if (!hotel.offer.features) {
-      return;
-    };
-
-    for (let featureElement of mapFilterFeatureElements) {
-      if (featureElement.checked && hotel
-        .offer
-        .features
-        .includes(featureElement.value)) {
+      if (priceFilter === isLowMidHigh()) {
         hotel.filterRate += 1;
       }
     }
-  }
 
-  const checkPrice = function (hotel) {
-    const hotelPrice = hotel.offer.price;
-    const priceFilter = housingPriceElement.value;
+    const aprovedByFilter = [];
 
-    const isLowMidHigh = function () {
-      if (hotelPrice < PriceValue.LOW) {
-        return 'low';
-      } if (hotelPrice > PriceValue.HIGH) {
-        return 'high';
-      } else {
-        return 'middle';
+    hotels.forEach((hotel) => {
+      hotel.filterRate = 0;
+
+      checkType(hotel);
+      checkPrice(hotel);
+      checkRooms(hotel);
+      checkGuests(hotel);
+      checkFeatures(hotel);
+
+      if (getNumOfActiveFilters() === hotel.filterRate) {
+        aprovedByFilter.push(hotel);
       }
-    };
+    })
+    console.log(aprovedByFilter);
+    generateMap(aprovedByFilter);
+    // return aprovedByFilter;
 
-    if (priceFilter === isLowMidHigh()) {
-      hotel.filterRate += 1;
-    }
   }
 
-  const aprovedByFilter = [];
-
-  hotels.forEach((hotel) => {
-    hotel.filterRate = 0;
-
-    checkType(hotel);
-    checkPrice(hotel);
-    checkRooms(hotel);
-    checkGuests(hotel);
-    checkFeatures(hotel);
-
-    if (getNumOfActiveFilters() === hotel.filterRate) {
-      aprovedByFilter.push(hotel);
-    }
-  })
-  console.log(aprovedByFilter);
-  return aprovedByFilter;
-
-}
-
-function applyFilter(response) {
+  function delayFunction(cb) {
+    return _.debounce(cb, RENENDER_DELAY)();
+  }
 
   mapFilterElement.addEventListener('change', () => {
-    const filteredOffers = filterHotels(response);
-    generateMap(filteredOffers);
+    // delay function execution
+    delayFunction(filterHotels);
   })
 }
+
+
 
 export { applyFilter };
 

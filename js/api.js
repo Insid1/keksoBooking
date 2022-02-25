@@ -41,7 +41,7 @@ function sendData(formData) {
   })
 }
 
-function onSubmitForm(onSuccess) {
+function onSubmitForm() {
 
   adFormElement.addEventListener('submit', (evt) => {
     const formData = new FormData(evt.target);
