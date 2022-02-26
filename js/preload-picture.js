@@ -1,3 +1,6 @@
+import {createElement} from './util.js'
+
+
 const avatarChooserElement = document.querySelector('#avatar');
 const avatarFieldElement = document.querySelector('.ad-form-header__preview');
 const hotelChooserElement = document.querySelector('#images');
@@ -17,8 +20,14 @@ function renderImgInField(field, chooser) {
     if (matches) {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
-        // console.log(reader.result);
-        field.innerHTML = `<img src="${reader.result}"></img>`;
+        const imgElement = createElement('img');
+        imgElement.src = reader.result;
+        imgElement.widht = 70;
+        imgElement.height = 70;
+        imgElement.borderRadius = 15;
+        field.innerHTML = '';
+        field.appendChild(imgElement);
+
       })
       reader.readAsDataURL(file)
     }
@@ -28,6 +37,3 @@ function renderImgInField(field, chooser) {
 
 renderImgInField(avatarFieldElement, avatarChooserElement);
 renderImgInField(hotelFieldElement, hotelChooserElement);
-
-// console.log(avatarChooserElement);
-// console.log(avatarFieldElement);

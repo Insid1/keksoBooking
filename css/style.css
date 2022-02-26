@@ -290,10 +290,10 @@ fieldset {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  justify-content: center;
 
   margin-right: 10px;
   padding: 0 15px;
-
   width: 70px;
   height: 70px;
 
@@ -304,9 +304,7 @@ fieldset {
 }
 
 .ad-form-header__preview img {
-  border-radius: inherit;
-  /* width: inherit;
-  height: inherit; */
+  border-radius: 5px;
 }
 
 .ad-form__field {
