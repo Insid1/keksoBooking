@@ -2,7 +2,7 @@
   "name": "keksobooking",
   "version": "22.0.0",
   "private": true,
-  "description": "Личный проект «{{projectTitle}}» от HTML Academy",
+  "description": "Личный проект «Кексобукинг» от HTML Academy",
   "repository": {
     "type": "git",
     "url": "{{sshUrl}}"
