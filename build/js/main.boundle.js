@@ -32119,7 +32119,7 @@ function showErrorPOST(SHOW_TIME) {
 
   document.body.appendChild(errorElement);
 
-  errorElement.addEventListener('click', (evt) => {
+  errorElement.addEventListener('click', () => {
     errorElement.remove();
   })
 
