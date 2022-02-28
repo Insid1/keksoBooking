@@ -30,4 +30,4 @@ Repo is created as part of asynchronous course(profession) "[JavaScript. Web int
 
 ## Project review
 
-[KeksoBooking](https://insid1.github.io/keksoBooking/build/)
+[KeksoBooking](https://insid1.github.io/keksoBooking/)
