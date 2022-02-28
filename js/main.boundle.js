@@ -31577,7 +31577,7 @@ function addConstrains() {
   // can be refactored through setCustonValidity
   function onRooms() {
     // function can be refactored quite hard to read conditional statements
-    const asignGuests = evt => {
+    const asignGuests = () => {
       const marker = +roomNumberElement.value;
       // active not for guest if rooms = 100;
       if (marker === 100) {
@@ -31604,7 +31604,7 @@ function addConstrains() {
   timeFieldElement.addEventListener('change', onTime());
   roomNumberElement.addEventListener('change', onRooms());
 
-  adFormElement.addEventListener('reset', (evt) => {
+  adFormElement.addEventListener('reset', () => {
     setTimeout(() => {
       // ^_^ sry :(
       onPrice()();
@@ -31931,7 +31931,7 @@ const hotelFieldElement = document.querySelector('.ad-form__photo');
 
 function renderImgInField(field, chooser) {
 
-  chooser.addEventListener('change', (evt) => {
+  chooser.addEventListener('change', () => {
     const file = chooser.files[0];
     const fileName = file.name.toLowerCase();
 
