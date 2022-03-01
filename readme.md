@@ -30,4 +30,6 @@ Repo is created as part of asynchronous course(profession) "[JavaScript. Web int
 
 ## Project review
 
+Project is deployed by GitHub pages with git subtree [technique](https://gist.github.com/cobyism/4730490)
+
 [KeksoBooking](https://insid1.github.io/keksoBooking/)
