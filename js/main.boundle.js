@@ -31260,17 +31260,19 @@ __webpack_require__.r(__webpack_exports__);
 
 const SHOW_TIME = 3000;
 const AMOUNT_OF_OFFERS = 10;
+const SERVER_URL_GET = 'https://23.javascript.pages.academy/keksobooking/data';
+const SERVER_URL_SEND = 'https://23.javascript.pages.academy/keksobooking';
 
 function getData() {
   return fetch(
-    'https://23.javascript.pages.academy/keksobooking/data')
+    SERVER_URL_GET)
     .then((response) => {
       return response.json();
     })
     .then((json) => {
       const temporaryData = json.slice(0, AMOUNT_OF_OFFERS);
       (0,_disable_mode_js__WEBPACK_IMPORTED_MODULE_3__.disablePage)(false);
-      (0,_map_js__WEBPACK_IMPORTED_MODULE_0__.generateMap)(temporaryData);
+      (0,_map_js__WEBPACK_IMPORTED_MODULE_0__.renderMap)(temporaryData);
       return json;
     })
     .catch(err => {
@@ -31279,9 +31281,7 @@ function getData() {
 }
 
 function sendData(formData) {
-
-
-  fetch('https://23.javascript.pages.academy/keksobooking', {
+  fetch(SERVER_URL_SEND, {
     method: 'POST',
     body: formData,
   }).then(response => {
@@ -31291,7 +31291,7 @@ function sendData(formData) {
     } else {
       (0,_util_js__WEBPACK_IMPORTED_MODULE_1__.showErrorPOST)(SHOW_TIME);
     }
-  }).catch(err => {
+  }).catch(() => {
     (0,_util_js__WEBPACK_IMPORTED_MODULE_1__.showErrorPOST)(SHOW_TIME);
   })
 }
@@ -31345,8 +31345,6 @@ function disablePage(bool = true) {
     }
   }
 
-
-
   // disable main ad form
   disableForm(_form_offer_constrain_js__WEBPACK_IMPORTED_MODULE_0__.adFormElement);
   // disable map form
@@ -31378,7 +31376,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./map.js */ "./source/js/map.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
-// import { getData } from "./api.js";
 
 
 
@@ -31395,8 +31392,6 @@ const housingPriceElement = mapFilterElement.querySelector('#housing-price');
 const housingRoomsElement = mapFilterElement.querySelector('#housing-rooms');
 const housingGuestsElement = mapFilterElement.querySelector('#housing-guests');
 const housingFeaturesElement = mapFilterElement.querySelector('#housing-features');
-
-
 
 function applyFilter(hotels) {
 
@@ -31482,7 +31477,7 @@ function applyFilter(hotels) {
         aprovedByFilter.push(hotel);
       }
     })
-    ;(0,_map_js__WEBPACK_IMPORTED_MODULE_0__.generateMap)(aprovedByFilter);
+    ;(0,_map_js__WEBPACK_IMPORTED_MODULE_0__.renderMap)(aprovedByFilter);
 
   }
 
@@ -31495,14 +31490,6 @@ function applyFilter(hotels) {
     delayFunction(filterHotels);
   })
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -31526,6 +31513,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const DELAY_FOR_RESET = 50;
 // price constrains
 const Prices = {
   bungalow: 0,
@@ -31534,7 +31522,6 @@ const Prices = {
   house: 5000,
   palace: 10000,
 }
-const DELAY_FOR_RESET = 50;
 
 // HTML elements
 const adFormElement = document.querySelector('.ad-form');
@@ -31631,7 +31618,7 @@ function addConstrains() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "generateMap": () => (/* binding */ generateMap),
+/* harmony export */   "renderMap": () => (/* binding */ renderMap),
 /* harmony export */   "fillAdress": () => (/* binding */ fillAdress)
 /* harmony export */ });
 /* harmony import */ var _offer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./offer.js */ "./source/js/offer.js");
@@ -31737,7 +31724,7 @@ mainMarker.on('moveend', () => {
 })
 
 // main function
-function generateMap(hotels) {
+function renderMap(hotels) {
   previousMarkers.removeFrom(map);
   const maximumHotels = hotels.slice(0, MAX_HOTEL_NUM);
   const generalMarkers = L.layerGroup(generateGeneralMarkers(maximumHotels));
@@ -31990,10 +31977,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "showErrorPOST": () => (/* binding */ showErrorPOST),
 /* harmony export */   "showSuccessServerMessage": () => (/* binding */ showSuccessServerMessage)
 /* harmony export */ });
-// ----- UTILITIES -----
 
-// Function that returns random integer from given range
-// Range can be only positive (0 is included)
 function getRandomInt(min, max) {
   if (min < 0 || max < 0) {
     return -1;
@@ -32024,8 +32008,6 @@ function trueOrFalse() {
   return false;
 }
 
-// Function that returns random floating number from given range and given number of decimal point
-// Range can be only positive (0 is included)
 function getRandomFloat(min, max, numOfdecimalPlace) {
   if (min >= max) {
     console.log('Given range is incorrect.')
@@ -32072,7 +32054,6 @@ function createCardFromTemplate() {
   return cardElement;
 }
 
-// function which create HTML element with given tag, class and textContent
 function createElement(tag = 'div', className, text) {
   const theElement = document.createElement(tag);
 
@@ -32276,6 +32257,7 @@ __webpack_require__.r(__webpack_exports__);
   .then((response) => {
     (0,_filter_js__WEBPACK_IMPORTED_MODULE_3__.applyFilter)(response);
   })
+
 
 
 
