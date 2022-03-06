@@ -31264,18 +31264,15 @@ const SERVER_URL_GET = 'https://23.javascript.pages.academy/keksobooking/data';
 const SERVER_URL_SEND = 'https://23.javascript.pages.academy/keksobooking';
 
 function getData() {
-  return fetch(
-    SERVER_URL_GET)
-    .then((response) => {
-      return response.json();
-    })
+  return fetch(SERVER_URL_GET)
+    .then((response) => response.json())
     .then((json) => {
       const temporaryData = json.slice(0, AMOUNT_OF_OFFERS);
       (0,_disable_mode_js__WEBPACK_IMPORTED_MODULE_3__.disablePage)(false);
       (0,_map_js__WEBPACK_IMPORTED_MODULE_0__.renderMap)(temporaryData);
       return json;
     })
-    .catch(err => {
+    .catch((err) => {
       (0,_util_js__WEBPACK_IMPORTED_MODULE_1__.showErrorGet)(err);
     });
 }
@@ -31284,27 +31281,27 @@ function sendData(formData) {
   fetch(SERVER_URL_SEND, {
     method: 'POST',
     body: formData,
-  }).then(response => {
-    if (response.ok) {
-      (0,_util_js__WEBPACK_IMPORTED_MODULE_1__.showSuccessServerMessage)(SHOW_TIME);
-      _form_offer_constrain_js__WEBPACK_IMPORTED_MODULE_2__.adFormElement.reset();
-    } else {
-      (0,_util_js__WEBPACK_IMPORTED_MODULE_1__.showErrorPOST)(SHOW_TIME);
-    }
-  }).catch(() => {
-    (0,_util_js__WEBPACK_IMPORTED_MODULE_1__.showErrorPOST)(SHOW_TIME);
   })
+    .then((response) => {
+      if (response.ok) {
+        (0,_util_js__WEBPACK_IMPORTED_MODULE_1__.showSuccessServerMessage)(SHOW_TIME);
+        _form_offer_constrain_js__WEBPACK_IMPORTED_MODULE_2__.adFormElement.reset();
+      } else {
+        (0,_util_js__WEBPACK_IMPORTED_MODULE_1__.showErrorPOST)(SHOW_TIME);
+      }
+    })
+    .catch(() => {
+      (0,_util_js__WEBPACK_IMPORTED_MODULE_1__.showErrorPOST)(SHOW_TIME);
+    });
 }
 
 function onSubmitForm() {
-
   _form_offer_constrain_js__WEBPACK_IMPORTED_MODULE_2__.adFormElement.addEventListener('submit', (evt) => {
     const formData = new FormData(evt.target);
     evt.preventDefault();
     sendData(formData);
-  })
+  });
 }
-
 
 
 
@@ -31331,7 +31328,7 @@ function disablePage(bool = true) {
   function disableFormElements(form) {
     const formElements = form.children;
 
-    for (let element of formElements) {
+    for (const element of formElements) {
       element.disabled = bool;
     }
   }
@@ -31339,7 +31336,7 @@ function disablePage(bool = true) {
   function disableForm(form) {
     const disableClass = `${form.classList[0]}--disabled`;
     if (bool) {
-      form.classList.add(disableClass)
+      form.classList.add(disableClass);
     } else {
       form.classList.remove(disableClass);
     }
@@ -31377,13 +31374,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
 
+// eslint-disable-next-line no-unused-vars
 
 
 const RENENDER_DELAY = 500;
 const PriceValue = {
   LOW: 10000,
   HIGH: 50000,
-}
+};
 const mapFilterElement = document.querySelector('.map__filters');
 const mapFilterElements = mapFilterElement.querySelectorAll('select');
 const mapFilterFeatureElements = mapFilterElement.querySelectorAll('input');
@@ -31391,49 +31389,48 @@ const housingTypeElement = mapFilterElement.querySelector('#housing-type');
 const housingPriceElement = mapFilterElement.querySelector('#housing-price');
 const housingRoomsElement = mapFilterElement.querySelector('#housing-rooms');
 const housingGuestsElement = mapFilterElement.querySelector('#housing-guests');
-const housingFeaturesElement = mapFilterElement.querySelector('#housing-features');
 
 function applyFilter(hotels) {
 
   function filterHotels() {
     const getNumOfActiveFilters = function () {
       let counter = 0;
-      for (let currFilter of mapFilterElements) {
+      for (const currFilter of mapFilterElements) {
         if (currFilter.value !== 'any') {
           counter += 1;
         }
       }
-      for (let currFeatureFilter of mapFilterFeatureElements) {
+      for (const currFeatureFilter of mapFilterFeatureElements) {
         if (currFeatureFilter.checked) {
           counter += 1;
         }
       }
       return counter;
-    }
+    };
 
     const checkType = function (hotel) {
       if (hotel.offer.type === housingTypeElement.value) {
         hotel.filterRate += 1;
-      };
-    }
+      }
+    };
     const checkRooms = function (hotel) {
       if (hotel.offer.rooms === +housingRoomsElement.value) {
         hotel.filterRate += 1;
-      };
-    }
+      }
+    };
 
     const checkGuests = function (hotel) {
       if (hotel.offer.guests === +housingGuestsElement.value) {
         hotel.filterRate += 1;
-      };
-    }
+      }
+    };
 
     const checkFeatures = function (hotel) {
       if (!hotel.offer.features) {
         return;
-      };
+      }
 
-      for (let featureElement of mapFilterFeatureElements) {
+      for (const featureElement of mapFilterFeatureElements) {
         if (featureElement.checked && hotel
           .offer
           .features
@@ -31441,7 +31438,7 @@ function applyFilter(hotels) {
           hotel.filterRate += 1;
         }
       }
-    }
+    };
 
     const checkPrice = function (hotel) {
       const hotelPrice = hotel.offer.price;
@@ -31460,7 +31457,7 @@ function applyFilter(hotels) {
       if (priceFilter === isLowMidHigh()) {
         hotel.filterRate += 1;
       }
-    }
+    };
 
     const aprovedByFilter = [];
 
@@ -31476,19 +31473,20 @@ function applyFilter(hotels) {
       if (getNumOfActiveFilters() === hotel.filterRate) {
         aprovedByFilter.push(hotel);
       }
-    })
-    ;(0,_map_js__WEBPACK_IMPORTED_MODULE_0__.renderMap)(aprovedByFilter);
+    });
+    (0,_map_js__WEBPACK_IMPORTED_MODULE_0__.renderMap)(aprovedByFilter);
 
   }
 
   function delayFunction(cb) {
+    // eslint-disable-next-line no-undef
     return _.debounce(cb, RENENDER_DELAY)();
   }
 
   mapFilterElement.addEventListener('change', () => {
     // delay function execution
     delayFunction(filterHotels);
-  })
+  });
 }
 
 
@@ -31521,7 +31519,7 @@ const Prices = {
   hotel: 3000,
   house: 5000,
   palace: 10000,
-}
+};
 
 // HTML elements
 const adFormElement = document.querySelector('.ad-form');
@@ -31537,30 +31535,30 @@ function addConstrains() {
   // functions for events
   function onPrice() {
     const assignMinimalPrice = () => {
-      const minValue = Prices[apartamentTypeElement.value]
+      const minValue = Prices[apartamentTypeElement.value];
       // assign placeholder:
       apartamentPriceElement.placeholder = minValue;
       // assign minimal value
       apartamentPriceElement.min = minValue;
-    }
+    };
 
     return assignMinimalPrice;
-  };
+  }
 
   function onTime() {
 
-    const assignTimeLink = evt => {
+    const assignTimeLink = (evt) => {
       const changer = evt.target;
 
       if (changer === timeInElement) {
         timeOutElement.value = timeInElement.value;
       } else {
         timeInElement.value = timeOutElement.value;
-      };
-    }
+      }
+    };
 
     return assignTimeLink;
-  };
+  }
   // can be refactored through setCustonValidity
   function onRooms() {
     // function can be refactored quite hard to read conditional statements
@@ -31581,10 +31579,10 @@ function addConstrains() {
           (0,_util_js__WEBPACK_IMPORTED_MODULE_0__.disableElement)(currentElement);
         }
       }
-    }
+    };
 
     return asignGuests;
-  };
+  }
 
   // assign events
   apartamentTypeElement.addEventListener('change', onPrice());
@@ -31598,7 +31596,7 @@ function addConstrains() {
       onRooms()();
       (0,_map_js__WEBPACK_IMPORTED_MODULE_1__.fillAdress)();
     }, DELAY_FOR_RESET);
-  })
+  });
 
 }
 
@@ -31633,27 +31631,26 @@ const CityCoords = {
   TOKYO: [35.68974, 139.75393],
 };
 const ZOOM = 14;
-const GENERAL_ICON_SIZE = 40 // px
-const MAIN_ICON_SIZE = 52 // px
+const GENERAL_ICON_SIZE = 40; // px
+const MAIN_ICON_SIZE = 52; // px
 const MAX_HOTEL_NUM = 10;
-let previousMarkers = L.layerGroup();
+let previousMarkers = leaflet__WEBPACK_IMPORTED_MODULE_1___default().layerGroup();
 
 // Icons
-const generalIcon = L.icon({
+const generalIcon = leaflet__WEBPACK_IMPORTED_MODULE_1___default().icon({
   iconUrl: './img/pin.svg',
   iconSize: [GENERAL_ICON_SIZE, GENERAL_ICON_SIZE],
   iconAnchor: [GENERAL_ICON_SIZE / 2, GENERAL_ICON_SIZE],
 });
-const mainIcon = L.icon({
+const mainIcon = leaflet__WEBPACK_IMPORTED_MODULE_1___default().icon({
   iconUrl: './img/main-pin.svg',
   iconSize: [MAIN_ICON_SIZE, MAIN_ICON_SIZE],
   iconAnchor: [MAIN_ICON_SIZE / 2, MAIN_ICON_SIZE],
 });
 
 function createMap() {
-  const map = L.map('map-canvas')
+  const Map = leaflet__WEBPACK_IMPORTED_MODULE_1___default().map('map-canvas')
     .on('load', () => {
-      console.log('Карта инициализирована!')
     })
     .setView({
       lat: CityCoords.TOKYO[0],
@@ -31661,15 +31658,15 @@ function createMap() {
     }, ZOOM);
 
   // Load map layer to initialized map
-  L.tileLayer(
+  leaflet__WEBPACK_IMPORTED_MODULE_1___default().tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   )
-    .addTo(map);
+    .addTo(Map);
 
-  return map
+  return Map;
 }
 
 function getMarkerCoordinates(marker) {
@@ -31677,14 +31674,14 @@ function getMarkerCoordinates(marker) {
   const lng = marker._latlng.lng.toFixed(5);
 
   return [lat, lng];
-};
+}
 
 function createMarker(coords, icon = generalIcon, drag = false) {
-  const marker = L.marker(
+  const marker = leaflet__WEBPACK_IMPORTED_MODULE_1___default().marker(
     coords, {
-    icon: icon,
-    draggable: drag,
-  })
+      icon: icon,
+      draggable: drag,
+    });
 
   return marker;
 }
@@ -31701,33 +31698,35 @@ function generateGeneralMarkers(hotels) {
     const marker = createMarker(coord);
     marker.bindPopup(currentOfferElement);
     markers.push(marker);
-  })
+  });
   return markers;
 
 }
 
-function fillAdress(element = adressElement) {
-  function asignAdress(coordinates) {
-    element.value = coordinates.join(' ');
-  }
-
-  const coordinates = getMarkerCoordinates(mainMarker);
-  // fill the adress field with coordinates
-  asignAdress(coordinates);
-}
 
 const map = createMap();
 const mainMarker = createMarker(CityCoords.TOKYO, mainIcon, true);
+function fillAdress(element = adressElement) {
+
+
+  const coordinates = getMarkerCoordinates(mainMarker);
+
+  function asignAdress(coords) {
+    element.value = coords.join(' ');
+  }
+  // fill the adress field with coordinates
+  asignAdress(coordinates);
+}
 mainMarker.addTo(map);
 mainMarker.on('moveend', () => {
   fillAdress();
-})
+});
 
 // main function
 function renderMap(hotels) {
   previousMarkers.removeFrom(map);
   const maximumHotels = hotels.slice(0, MAX_HOTEL_NUM);
-  const generalMarkers = L.layerGroup(generateGeneralMarkers(maximumHotels));
+  const generalMarkers = leaflet__WEBPACK_IMPORTED_MODULE_1___default().layerGroup(generateGeneralMarkers(maximumHotels));
   generalMarkers.addTo(map);
   // store markers to delete them after function call
   previousMarkers = generalMarkers;
@@ -31761,57 +31760,6 @@ function createOfferElements(hotels) {
 
   function createOfferFromData(offerElement, offerData) {
 
-    // Functions
-    function decideType(type) {
-      switch (type) {
-        case 'flat':
-          return 'Квартира';
-        case 'bungalow':
-          return 'Бунгало';
-        case 'house':
-          return 'Дом';
-        case 'palace':
-          return 'Дворец';
-        default:
-          return 'ЖИЛИЩЕ';
-      }
-    }
-
-    // returns a string as html Element to inser into code through innerHtml
-    function decideFeatures() {
-      let featuresElement = document.createDocumentFragment();
-      elementFeatures.innerHTML = '';
-
-      if (!features) return;
-      // create html elements
-
-      for (let i = 0; i < features.length; i++) {
-        const currentFeature = features[i];
-        const currentElement = (0,_util_js__WEBPACK_IMPORTED_MODULE_0__.createElement)('li', 'popup__feature');
-        currentElement.classList.add(`popup__feature--${currentFeature}`)
-
-        featuresElement.appendChild(currentElement);
-      }
-      // remove already existing elements from parent Element
-
-      // add new elements
-      elementFeatures.appendChild(featuresElement);
-
-    }
-
-    function decidePhotos(photos) {
-      let photosAsString = '';
-
-      if (!photos) return;
-
-      for (let i = 0; i < photos.length; i++) {
-        let currentPhotoLink = photos[i];
-
-        photosAsString += `<img src="${currentPhotoLink}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`
-      }
-
-      return photosAsString;
-    }
 
     // assign DOM element to variables
     const elementTitle = offerElement.querySelector(
@@ -31859,6 +31807,59 @@ function createOfferElements(hotels) {
       photos
     } = offer;
 
+    // Functions
+    function decideType(currType) {
+      switch (currType) {
+        case 'flat':
+          return 'Квартира';
+        case 'bungalow':
+          return 'Бунгало';
+        case 'house':
+          return 'Дом';
+        case 'palace':
+          return 'Дворец';
+        default:
+          return 'ЖИЛИЩЕ';
+      }
+    }
+
+    // returns a string as html Element to inser into code through innerHtml
+    function decideFeatures() {
+      const featuresElement = document.createDocumentFragment();
+      elementFeatures.innerHTML = '';
+
+      if (!features) {return;}
+      // create html elements
+
+      for (let i = 0; i < features.length; i++) {
+        const currentFeature = features[i];
+        const currentElement = (0,_util_js__WEBPACK_IMPORTED_MODULE_0__.createElement)('li', 'popup__feature');
+        currentElement.classList.add(`popup__feature--${currentFeature}`);
+
+        featuresElement.appendChild(currentElement);
+      }
+      // remove already existing elements from parent Element
+
+      // add new elements
+      elementFeatures.appendChild(featuresElement);
+
+    }
+
+    function decidePhotos(currPhotos) {
+      let photosAsString = '';
+
+      if (!currPhotos) {return;}
+
+      for (let i = 0; i < currPhotos.length; i++) {
+        const currentPhotoLink = currPhotos[i];
+
+        photosAsString += `<img src="${currentPhotoLink}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`;
+      }
+
+      return photosAsString;
+    }
+
+
     // assign data to DOM variables
     elementTitle.textContent = title;
     elementAdress.textContent = addres;
@@ -31871,16 +31872,16 @@ function createOfferElements(hotels) {
     elementAvatar.src = avatarLink;
     decideFeatures();
 
-  };
+  }
 
-  hotels.forEach(currOffer => {
+  hotels.forEach((currOffer) => {
     // create card element from tempalte
     const currentCardElement = (0,_util_js__WEBPACK_IMPORTED_MODULE_0__.createCardFromTemplate)();
     // create offer from given data and put it into  cardElement
     createOfferFromData(currentCardElement, currOffer);
 
     offerElements.appendChild(currentCardElement);
-  })
+  });
 
   // return collection of offer elements
   return offerElements.children;
@@ -31922,9 +31923,7 @@ function renderImgInField(field, chooser) {
     const file = chooser.files[0];
     const fileName = file.name.toLowerCase();
 
-    const matches = FILE_TYPES.some((it) => {
-      return fileName.endsWith(it);
-    });
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
     if (matches) {
       const reader = new FileReader();
@@ -31937,10 +31936,10 @@ function renderImgInField(field, chooser) {
         field.innerHTML = '';
         field.appendChild(imgElement);
 
-      })
-      reader.readAsDataURL(file)
+      });
+      reader.readAsDataURL(file);
     }
-  })
+  });
 
 }
 
@@ -31975,7 +31974,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "disableElement": () => (/* binding */ disableElement),
 /* harmony export */   "showErrorGet": () => (/* binding */ showErrorGet),
 /* harmony export */   "showErrorPOST": () => (/* binding */ showErrorPOST),
-/* harmony export */   "showSuccessServerMessage": () => (/* binding */ showSuccessServerMessage)
+/* harmony export */   "showSuccessServerMessage": () => (/* binding */ showSuccessServerMessage),
+/* harmony export */   "myDebounce": () => (/* binding */ myDebounce)
 /* harmony export */ });
 
 function getRandomInt(min, max) {
@@ -31992,16 +31992,15 @@ function getRandomInt(min, max) {
   // to round number to less then or equal number
   max = ~~max;
 
-  let randomNumber;
-  let randomFloat = Math.random();
+  const randomFloat = Math.random();
 
-  randomNumber = ~~(randomFloat * (max - min + 1)) + min;
+  const randomNumber = ~~(randomFloat * (max - min + 1)) + min;
   return randomNumber;
 }
 
 // Returns you random value true or false
 function trueOrFalse() {
-  let checker = getRandomInt(0, 1)
+  const checker = getRandomInt(0, 1);
   if (checker) {
     return true;
   }
@@ -32010,14 +32009,12 @@ function trueOrFalse() {
 
 function getRandomFloat(min, max, numOfdecimalPlace) {
   if (min >= max) {
-    console.log('Given range is incorrect.')
     return;
   }
 
-  let randomNumber;
-  let randomFloat = Math.random();
+  const randomFloat = Math.random();
 
-  randomNumber = (randomFloat * (max - min)) + min;
+  const randomNumber = (randomFloat * (max - min)) + min;
   return +randomNumber.toFixed(numOfdecimalPlace);
 }
 
@@ -32025,7 +32022,7 @@ function getRandomFloat(min, max, numOfdecimalPlace) {
 // length lower than given maximum length
 function isMaximumLength(string, maxLength) {
   if (string.length > maxLength) {
-    return false
+    return false;
   }
   return true;
 }
@@ -32037,10 +32034,9 @@ function capitalizeFirstLetter(string) {
 
 // Function that returns random element(string) from array and deletes it from array
 function randomSplice(arr) {
-  let result;
-  let randomIndex = getRandomInt(0, arr.length - 1);
+  const randomIndex = getRandomInt(0, arr.length - 1);
 
-  result = arr.splice(randomIndex, 1)
+  const result = arr.splice(randomIndex, 1);
   return String(result);
 }
 
@@ -32074,7 +32070,7 @@ function disableElement(element, bool = true) {
 
 function removeElementInTime(element, time = 1000) {
   setTimeout(() => {
-    element.remove()
+    element.remove();
   }, time);
 }
 
@@ -32096,13 +32092,12 @@ function showErrorGet(err, SHOW_TIME) {
 function showErrorPOST(SHOW_TIME) {
   const errorTemplate = document.querySelector('#error').content.querySelector('.error');
   const errorElement = errorTemplate.cloneNode(true);
-  const errorButton = errorElement.querySelector('.error__button')
 
   document.body.appendChild(errorElement);
 
   errorElement.addEventListener('click', () => {
     errorElement.remove();
-  })
+  });
 
   removeElementInTime(errorElement, SHOW_TIME);
 
@@ -32125,8 +32120,8 @@ function myDebounce(cb, timeout) {
     clearTimeout(handler);
     handler = setTimeout(() => {
       cb();
-    }, timeout)
-  }
+    }, timeout);
+  };
 
 
 }
@@ -32256,19 +32251,7 @@ __webpack_require__.r(__webpack_exports__);
 (0,_api_js__WEBPACK_IMPORTED_MODULE_2__.getData)()
   .then((response) => {
     (0,_filter_js__WEBPACK_IMPORTED_MODULE_3__.applyFilter)(response);
-  })
-
-
-
-
-
-
-
-
-
-
-
-
+  });
 
 
 
